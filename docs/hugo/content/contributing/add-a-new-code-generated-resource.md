@@ -114,6 +114,25 @@ network:
         $armReference: false # the property IS NOT an ARM reference
 ```
 
+### Can't generate code for a resource that is in preview
+
+Example:
+
+>[controller:generate-types] 20:04:42 ERR failed to execute root command error="error generating code:
+failed to execute stage 20:
+Apply export filters to reduce the number of generated types:
+group containerservice: version 2023-06-15-preview not seen (did you mean 2023-02-02-preview?):
+version 2023-06-15-preview: $export specified for type Fleet but not consumed"
+
+Generating code for a resource in preview is blocked by default. To allow the specific preview API, you will need to add the following to the `typeFilters` section at the top of the document.
+
+```yaml
+action: include
+group: <your group>
+version: <your version>
+because: <brief reason why>
+```
+
 TODO: expand on other common errors
 
 ## Examine the generated resource
